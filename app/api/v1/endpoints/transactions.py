@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from typing import Optional
 from datetime import datetime
 import random
+import json
 from app.schemas.transaction import (
     TransactionCreate, 
     TransactionResponse,
@@ -14,7 +15,46 @@ from app.schemas.transaction import (
 
 router = APIRouter()
 
+# DEBUG ROUTE - Add this
+@router.post("/debug-test")
+async def debug_test(request: Request):
+    """
+    Debug endpoint to see raw request data
+    """
+    try:
+        # Get raw body
+        body = await request.body()
+        body_str = body.decode('utf-8')
+        
+        # Try to parse
+        parsed = json.loads(body_str)
+        
+        return {
+            "raw_body": body_str,
+            "parsed": parsed,
+            "transaction_type_value": parsed.get("transaction_type"),
+            "transaction_type_type": type(parsed.get("transaction_type")).__name__ if parsed.get("transaction_type") else "None"
+        }
+    except Exception as e:
+        return {"error": str(e), "raw_body": body_str if 'body_str' in locals() else "N/A"}
+
 # POST /transactions
+@router.post("/test-simple")
+async def test_simple(request: Request):
+    """Simple test endpoint that accepts any JSON"""
+    try:
+        body = await request.json()
+        return {
+            "success": True,
+            "received": body,
+            "message": "API is working!"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "message": "JSON parsing failed"
+        }
 @router.post(
     "/", 
     response_model=TransactionResponse,

@@ -1,0 +1,44 @@
+Table users {
+  user_id uuid [pk]
+  name varchar
+  email varchar
+  created_at timestamp
+}
+
+Table accounts {
+  account_id uuid [pk]
+  user_id uuid [ref: > users.user_id]
+  balance decimal
+  status varchar
+  created_at timestamp
+}
+
+Table transactions {
+  transaction_id uuid [pk]
+  account_id uuid [ref: > accounts.account_id]
+  amount decimal
+  type varchar
+  status varchar
+  idempotency_key varchar [unique]
+  created_at timestamp
+}
+
+Table fraud_logs {
+  fraud_id uuid [pk]
+  transaction_id uuid [ref: > transactions.transaction_id]
+  risk_score float
+  flagged boolean
+  created_at timestamp
+}
+
+Table audit_logs {
+  log_id uuid [pk]
+  transaction_id uuid [ref: > transactions.transaction_id]
+  action varchar
+  created_at timestamp
+}
+
+// transactions table is IMMUTABLE (INSERT ONLY)
+
+
+

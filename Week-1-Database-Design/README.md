@@ -1,36 +1,69 @@
-
-# Week 1 – Database Design (Member 2)
+# Week 1 – Fraud Detection Strategy & ML Design (Member 3)
 
 ## Role
-Database & Infrastructure Engineer
+Machine Learning & Fraud Logic Engineer
 
 ## Objective
-Design the database schema for SentinelStream and align it with backend APIs.
+Design the fraud detection intelligence layer for SentinelStream,
+including rule-based fraud detection, machine learning approach,
+risk scoring logic, and system data integration.
 
-## Tables Designed
-- users
-- accounts
-- transactions (IMMUTABLE)
-- fraud_logs
-- audit_logs
+## Scope of Work (Week 1)
 
-## Key Rules
-1. Transactions table is INSERT ONLY (no updates/deletes).
-2. idempotency_key is UNIQUE to prevent duplicate transactions.
-3. fraud_logs and audit_logs are append-only.
-4. All primary keys use UUID.
+The following fraud detection design and research components
+were completed as part of Week 1:
 
-## Redis Usage Plan (Design Only)
-- Store idempotency keys temporarily to prevent duplicate transactions.
-- Maintain rate limiting counters per user/account.
-- Cache frequently accessed user and account data.
+- Common fraud scenarios in digital payment systems
+- Rule-based fraud detection logic
+- Machine learning feature planning
+- ML approach selection (Isolation Forest)
+- Data flow and synchronization with backend and frontend systems
+- Risk scoring and fraud decision strategy
 
-## Integration Notes for Backend (Member 1)
-- Database column names are designed to match API field names.
-- `schema.dbml` should be used as the source of truth for table creation.
-- Please suggest any required field changes for API alignment.
+## Key Design Decisions
 
-## Status
-Week 1 completed by Member 2.
+1. Fraud detection uses a **layered approach**:
+   - Rule-based checks for explainability
+   - ML-based anomaly detection for unknown patterns
 
-Add Week 1 database design documentation (Member 2)
+2. **Unsupervised learning (Isolation Forest)** is chosen:
+   - No dependency on labeled fraud data
+   - Suitable for real-time, low-latency systems
+
+3. Fraud decisions are based on a **combined risk score**:
+   - Rule-based risk score
+   - ML anomaly score
+
+4. Final transaction outcomes:
+   - ALLOW
+   - FLAG FOR REVIEW
+   - BLOCK
+
+## Data Dependencies
+
+### From Backend (Member 1)
+- Transaction metadata
+- User history and behavioral patterns
+- Device fingerprints
+- Login attempt logs
+
+### From Frontend (Member 2)
+- Device information
+- Location data (GPS / IP-based)
+- User confirmation signals
+
+## Constraints & Assumptions
+
+- Location data may not always be available
+  → IP-based geolocation used as fallback
+
+- New users may lack historical data
+  → Conservative fraud rules applied
+
+- Some data is unavailable due to privacy regulations:
+  - SIM card data
+  - Contact list access
+  - Biometric liveness detection
+
+## Folder Structure (Fraud Research)
+

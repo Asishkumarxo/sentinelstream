@@ -13,6 +13,13 @@ async def create_transaction(
 ):
     return await transaction_service.process_transaction(db, transaction)
 
+@router.get("/feed", response_model=list[TransactionResponse])
+async def get_transaction_feed(
+    limit: int = Query(50, ge=1, le=200),
+    db: AsyncSession = Depends(get_db)
+):
+    return await transaction_service.get_recent_transactions(db, limit)
+
 @router.get("/{transaction_id}", response_model=TransactionResponse)
 async def get_transaction(
     transaction_id: str,
@@ -31,3 +38,4 @@ async def get_user_history(
     db: AsyncSession = Depends(get_db)
 ):
     return await transaction_service.get_user_transactions(db, user_id, page, page_size)
+

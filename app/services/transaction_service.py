@@ -122,6 +122,24 @@ class TransactionService:
             page_size=page_size
         )
 
+    async def get_recent_transactions(self, db: AsyncSession, limit: int = 50) -> list[TransactionResponse]:
+        stmt = select(Transaction).order_by(desc(Transaction.created_at)).limit(limit)
+        result = await db.execute(stmt)
+        rows = result.scalars().all()
+        
+        return [
+            TransactionResponse(
+                transaction_id=uuid.UUID(t.id),
+                status=t.status,
+                amount=t.amount,
+                currency=t.currency,
+                merchant=t.merchant,
+                fraud_score=t.fraud_score,
+                message="Live feed",
+                timestamp=t.created_at
+            ) for t in rows
+        ]
+
 # Export class, not instance, to allow dependency injection of service if needed, 
 # or use a singleton but pass DB session.
 transaction_service = TransactionService()

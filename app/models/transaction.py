@@ -22,6 +22,10 @@ class Transaction(Base):
     
     # Idempotency
     idempotency_key = Column(String, unique=True, index=True, nullable=True)
+
+    # Metadata
+    ip_address = Column(String, nullable=True)
+    user_agent = Column(String, nullable=True)
     
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)

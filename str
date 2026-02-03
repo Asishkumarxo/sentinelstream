@@ -1,0 +1,1 @@
+    def _generate_key(self, user_id: str, idempotency_key: str) -

@@ -1,0 +1,1 @@
+    print('Database URL:', settings.DATABASE_URL[:50] + '...' if len(settings.DATABASE_URL)  else settings.DATABASE_URL)

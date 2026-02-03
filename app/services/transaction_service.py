@@ -8,6 +8,34 @@ from datetime import datetime
 
 class TransactionService:
     async def process_transaction(self, db: AsyncSession, transaction_data: TransactionCreate) -> TransactionResponse:
+        from app.services.fraud import fraud_engine
+        
+        # Fetch recent user history for fraud detection context
+        # Fetching last 100 transactions to balance performance and rule accuracy
+        stmt = select(Transaction).where(Transaction.user_id == transaction_data.user_id).order_by(desc(Transaction.created_at)).limit(100)
+        result = await db.execute(stmt)
+        history = result.scalars().all()
+        
+        # Evaluate Fraud
+        fraud_result = await fraud_engine.evaluate_transaction(transaction_data, history)
+        
+        fraud_score = fraud_result["total_score"]
+        is_fraudulent = fraud_result["is_fraudulent"]
+        triggered_rules = fraud_result["triggered_rules"]
+        
+        # Determine Status
+        status = "approved"
+        if fraud_score >= 70.0:
+            status = "rejected"
+        elif fraud_score >= 40.0:
+            status = "flagged"
+            
+        message = "Transaction processed successfully"
+        if status == "rejected":
+            message = f"Transaction rejected due to high risk: {', '.join(triggered_rules)}"
+        elif status == "flagged":
+            message = f"Transaction flagged for review: {', '.join(triggered_rules)}"
+            
         # Create DB model
         db_transaction = Transaction(
             user_id=transaction_data.user_id,
@@ -16,9 +44,11 @@ class TransactionService:
             merchant=transaction_data.merchant,
             transaction_type=transaction_data.transaction_type,
             category=transaction_data.category,
-            status="approved", # Auto-approve for now
-            fraud_score=0.0,
-            is_fraudulent=False,
+            status=status,
+            fraud_score=fraud_score,
+            is_fraudulent=is_fraudulent,
+            ip_address=transaction_data.ip_address,
+            user_agent=transaction_data.user_agent,
             created_at=datetime.utcnow(),
             updated_at=datetime.utcnow()
         )
@@ -31,7 +61,7 @@ class TransactionService:
             transaction_id=uuid.UUID(db_transaction.id),
             status=db_transaction.status,
             fraud_score=db_transaction.fraud_score,
-            message="Transaction processed successfully",
+            message=message,
             timestamp=db_transaction.created_at
         )
 

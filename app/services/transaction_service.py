@@ -60,6 +60,9 @@ class TransactionService:
         return TransactionResponse(
             transaction_id=uuid.UUID(db_transaction.id),
             status=db_transaction.status,
+            amount=db_transaction.amount,
+            currency=db_transaction.currency,
+            merchant=db_transaction.merchant,
             fraud_score=db_transaction.fraud_score,
             message=message,
             timestamp=db_transaction.created_at
@@ -75,6 +78,9 @@ class TransactionService:
         return TransactionResponse(
             transaction_id=uuid.UUID(transaction.id),
             status=transaction.status,
+            amount=transaction.amount,
+            currency=transaction.currency,
+            merchant=transaction.merchant,
             fraud_score=transaction.fraud_score,
             message="Retrieved successfully",
             timestamp=transaction.created_at
@@ -100,6 +106,9 @@ class TransactionService:
             TransactionResponse(
                 transaction_id=uuid.UUID(t.id),
                 status=t.status,
+                amount=t.amount,
+                currency=t.currency,
+                merchant=t.merchant,
                 fraud_score=t.fraud_score,
                 message="History item",
                 timestamp=t.created_at

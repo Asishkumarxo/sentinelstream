@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SentinelStream | Live Fraud Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>SentinelStream</span>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fa-solid fa-list"></i> Transactions</a></li>
+                    <li><a href="#"><i class="fa-solid fa-triangle-exclamation"></i> Alerts</a></li>
+                    <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="info">
+                    <p>Admin User</p>
+                    <small>Security Ops</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p>Real-time Transaction Monitoring System</p>
+                </div>
+                <div class="status-indicator online">
+                    <span class="dot"></span> System Operational
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="icon-box"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Processed</h3>
+                        <p class="value" id="total-txns">--</p>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="icon-box"><i class="fa-solid fa-flag"></i></div>
+                    <div class="stat-info">
+                        <h3>Flagged</h3>
+                        <p class="value" id="flagged-txns">--</p>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="icon-box"><i class="fa-solid fa-ban"></i></div>
+                    <div class="stat-info">
+                        <h3>Rejected</h3>
+                        <p class="value" id="rejected-txns">--</p>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="icon-box"><i class="fa-solid fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3>Approval Rate</h3>
+                        <p class="value" id="approval-rate">--%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Live Feed -->
+            <section class="feed-section">
+                <div class="section-header">
+                    <h2>Live Transactions</h2>
+                    <div class="controls">
+                        <input type="text" placeholder="Search ID or User..." id="search-input">
+                        <button class="btn-refresh" id="refresh-btn"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Transaction ID</th>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Merchant</th>
+                                <th>Score</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-table-body">
+                            <!-- Rows will be injected by JS -->
+                            <tr>
+                                <td colspan="7" class="loading-row">Loading stream...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

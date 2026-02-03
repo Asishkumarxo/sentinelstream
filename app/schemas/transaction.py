@@ -27,6 +27,9 @@ class TransactionCreate(TransactionBase):
 class TransactionResponse(BaseModel):
     transaction_id: uuid.UUID
     status: str  # APPROVED, FLAGGED, REJECTED
+    amount: float
+    currency: str
+    merchant: str
     fraud_score: Optional[float] = None
     message: Optional[str] = None
     timestamp: datetime

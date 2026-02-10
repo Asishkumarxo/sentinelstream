@@ -7,3 +7,6 @@ asyncpg
 pydantic-settings
 python-dotenv
 requests
+pytest
+pytest-asyncio
+httpx

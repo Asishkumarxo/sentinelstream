@@ -114,23 +114,35 @@ Idempotency Plan: idempotency\_plan.md
 
 
 
-Week	Member	Focus	Status
 
-1	Backend Engineer	API Design	✅ COMPLETED
+## 🧪 Running Tests
+To run the automated test suite:
+```bash
+# Run all tests
+python -m pytest
 
-2	Database Architect	Database Schema	⏳ Pending
+# Run specific test file
+python -m pytest tests/test_api.py
+```
 
-3	Fraud Detection Engineer	Fraud Algorithms	⏳ Pending
+## 🐳 Docker Support
+The project is fully containerized. To run the entire stack (Backend, Frontend, Redis, Postgres):
+```bash
+docker-compose up --build
+```
+- Frontend: http://localhost:3000
+- Backend: http://localhost:8000
+- API Docs: http://localhost:8000/docs
 
-4	Frontend/DevOps Engineer	UI \& Deployment	⏳ Pending
+## 📜 Project Status
+| Week | Focus | Status |
+| :--- | :--- | :--- |
+| 1 | Backend API Design | ✅ COMPLETED |
+| 2 | Database Integration | ✅ COMPLETED |
+| 3 | Fraud Detection Engine | ✅ COMPLETED |
+| 4 | Frontend & Deployment | ✅ COMPLETED |
 
+## 🔗 Links
+- [GitHub Repository](https://github.com/Asishkumarxo/sentinelstream)
 
-
-
-
-GitHub: https://github.com/Asishkumarxo/sentinelstream
-
-
-
-API Testing: Use test\_api.py for quick tests
 

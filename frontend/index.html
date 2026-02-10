@@ -8,12 +8,49 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <div class="app-container">
+    <!-- Landing Page -->
+    <div id="landing-page" class="landing-container">
+        <div class="landing-content">
+            <div class="landing-header">
+                <i class="fa-solid fa-shield-halved landing-logo"></i>
+                <h1>SentinelStream</h1>
+                <p>Advanced Real-time Transaction Fraud Monitoring</p>
+            </div>
+
+            <div class="landing-grid">
+                <div class="landing-card" onclick="enterApp('dashboard')">
+                    <div class="card-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3>Dashboard</h3>
+                    <p>Live metrics and system status.</p>
+                </div>
+                <div class="landing-card" onclick="enterApp('transactions')">
+                    <div class="card-icon"><i class="fa-solid fa-list"></i></div>
+                    <h3>Transactions</h3>
+                    <p>View full transaction history.</p>
+                </div>
+                <div class="landing-card" onclick="enterApp('alerts')">
+                    <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <h3>Alerts</h3>
+                    <p>Manage flagged activities.</p>
+                </div>
+            </div>
+
+            <div class="landing-footer">
+                <button class="btn-enter" onclick="enterApp('dashboard')">Enter System</button>
+            </div>
+        </div>
+        <div class="background-effects">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+        </div>
+    </div>
+
+    <div class="app-container hidden">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">

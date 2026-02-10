@@ -40,5 +40,4 @@ Table audit_logs {
 
 // transactions table is IMMUTABLE (INSERT ONLY)
 
-
-
+// Schema Version: 1.0 (Finalized)
